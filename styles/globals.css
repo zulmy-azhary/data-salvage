@@ -1,16 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	padding: 0;
+	margin: 0;
+	font-family: "Bahnschrift", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+		Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.content__header {
+	@apply text-[25px] font-semibold mb-5 tracking-wider;
+}
+
+#guestpage label,
+p {
+	@apply font-medium text-sm;
+}
+
+input:not([type="checkbox"]) {
+	@apply bg-[#FAFAFA] border-[1px] border-black/25 focus-visible:outline-green-500/50 px-3 py-2 mt-2 w-full text-sm;
+}
+
+#guestpage small {
+	@apply text-red-700;
+}
+
+#guestpage .button {
+	@apply py-[10px] w-full bg-secondary text-primary font-semibold rounded-md text-center;
+}
+
+#guestpage a {
+	@apply pl-1 text-blue-600;
+}
+
+#guestpage {
+	height: 100vh;
+	background: url("/assets/login-bg.png") no-repeat center center fixed;
+	background-size: cover;
+}
+
+.sidebar-menu :is(a, button):not(.active):hover{
+  @apply bg-black/10 relative before:absolute before:w-2.5 before:bg-black/25 before:left-0 before:inset-y-0;
+}
+
+aside :is(a, button){
+  @apply block w-full text-center py-6 font-semibold;
+}
+
+#homepage input:not([type=checkbox]){
+  @apply bg-[#FAFAFA] border-[1px] border-black/25 focus-visible:outline-green-500/50 px-3 py-2 mt-2 w-full text-sm;
+}
+
+#homepage input[type=file]{
+  @apply bg-transparent border-none p-0 mt-0 text-sm w-auto;
+}
+
+#homepage select {
+  @apply bg-[#FAFAFA] border-[1px] border-black/25 focus-visible:outline-green-500/50 px-3 py-2 mt-2 w-full text-sm h-[38px];
+}
+
+#homepage label, p{
+  @apply font-medium text-sm
+}
+
+#homepage .button {
+  @apply py-2 px-5 bg-secondary text-primary font-semibold rounded-md text-center text-sm border-[1px] border-black/25
+}
+
+th {
+	@apply px-6 py-3 text-sm xl:text-base;
+}
+
+td {
+	@apply py-[10px] text-sm xl:text-base;
 }
