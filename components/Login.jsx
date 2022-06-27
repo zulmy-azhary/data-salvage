@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
-import Card from './Card';
+import { Card } from './';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 const Login = () => {
   const router = useRouter();
@@ -19,12 +20,17 @@ const Login = () => {
   }
 
   const signInHandler = () => {
-    signInWithGoogle("", { prompt: "select_account" })
+    signInWithGoogle("", { prompt: "select_account" });
     router.push('/')
   }
   
   return (
     <div id="guestpage">
+      <Head>
+        <title>Salvage App | Login</title>
+        <meta name="description" content="Salvage App Login Page" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="flex flex-col justify-center items-center h-full px-8 md:px-0">
         <img src="/assets/brand.svg" alt="Kalla Toyota Urip" className="w-56 md:w-80 xl:w-[400px]" />
         <Card className="w-full md:w-[450px] lg:w-[500px] my-9">
@@ -63,7 +69,16 @@ const Login = () => {
               </p>
             </div> */}
           </form>
-          <button onClick={signInHandler}>Sign In With Google</button>
+          <div className="flex flex-row justify-center items-center">
+              <hr className="grow" />
+              <p className="text-center mx-6">OR</p>
+              <hr className="grow" />
+          </div>
+          <div className="mt-5 mb-9">
+            <div className="flex justify-center items-center">
+              <button onClick={signInHandler}>Sign In With Google</button>
+            </div>
+          </div>
         </div>
         </Card>
         <p className="text-sm xl:text-base tracking-wider">Copyright &copy; 2022 Kalla Toyota Urip</p>

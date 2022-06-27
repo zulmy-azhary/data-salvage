@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Table = () => {
+const Table = ({ data: { data, loading } }) => {
   return (
     <>
       <h2 className="text-lg md:text-xl xl:text-2xl text-center font-bold">ITEM ASURANSI SALVAGE</h2>
@@ -17,102 +15,26 @@ const Table = () => {
               </tr>
             </thead>
               <tbody>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
-                <tr className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                  <td>1</td>
-                  <td>25/27/10473</td>
-                  <td>DD-3696-GX</td>
-                  <td>Ahmad Supardi</td>
-                  <td>Palopo</td>
-                  <td>WIS</td>
-                </tr>
+                {!loading ? (
+                  data.length > 0 ? (
+                    data.map((item, idx) => {
+                      return (
+                        <tr key={idx} className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
+                          <td>1</td>
+                          <td>{item.nomorWO}</td>
+                          <td>{item.nomorPolisi}</td>
+                          <td>{item.serviceAdvisor}</td>
+                          <td>{item.asuransi}</td>
+                          <td>{item.vendor}</td>
+                        </tr>
+                      )
+                    })
+                  ) : (
+                    <tr><td>Tidak ada data</td></tr>
+                  )
+                ) : (
+                  <tr><td>Memuat...</td></tr>
+                )}
               </tbody>
           </table>
         </div>

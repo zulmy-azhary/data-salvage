@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import Layout from '../components/layout/Layout';
-import Head from 'next/head';
-import Card from '../components/Card';
+import { useState } from 'react';
+import { Layout } from '../components/layout';
+import { Card } from '../components';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 // Service Advisor Options
 const serviceAdvisor = [
@@ -17,6 +20,7 @@ const serviceAdvisor = [
 ];
 
 const CreateData = () => {
+  const router = useRouter();
 
   // Each item
   const [item, setItem] = useState({
@@ -52,9 +56,9 @@ const CreateData = () => {
 
   const addItemHandler = e => {
     e.preventDefault();
-    console.log(data.itemList)
     if (item.name) {
-      setData({ ...data, itemList: [...data.itemList, item.name] });
+      !data.itemList.includes(item.name) &&
+        setData({ ...data, itemList: [...data.itemList, item.name] });
       setItem({name: ""})
     }
   }
@@ -67,17 +71,35 @@ const CreateData = () => {
     setData({...data, itemList: filteredItem});
   }
 
-  const submitHandler = e => {
+  const submitHandler = async e => {
     e.preventDefault();
-
-    console.log('submit')
+    await addDoc(collection(db, 'data-salvage'), {
+      nomorWO: data.nomorWO,
+      nomorPolisi: data.nomorPolisi,
+      serviceAdvisor: data.serviceAdvisor,
+      asuransi: data.asuransi,
+      vendor: data.vendor,
+      imageURL: data.image.name,
+      itemList: data.itemList,
+      createdAt: serverTimestamp()
+    }).then(() => {
+      toast.success("Data berhasil ditambahkan!");
+      setData({
+        nomorWO: "",
+        nomorPolisi: "",
+        serviceAdvisor: "Ahmad Supardi",
+        asuransi: "",
+        vendor: "WIS",
+        itemList: [],
+        image: ""
+      })
+    }).catch(err => {
+      toast.error(err.message);
+    })
   }
+  
   return (
-    <Layout>
-      <Head>
-        <title>Salvage App | Create Data</title>
-      </Head>
-      <pre>{JSON.stringify(data)}</pre>
+    <Layout title="Create Data">
       <h1 className="content__header">CREATE DATA</h1>
       <Card>
         <form onSubmit={submitHandler} encType="multipart/form-data" className="w-full px-10 md:px-14 xl:px-24 my-10">

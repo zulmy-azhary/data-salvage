@@ -50,32 +50,37 @@ input:not([type="checkbox"]) {
 	background-size: cover;
 }
 
-.sidebar-menu :is(a, button):not(.active):hover{
-  @apply bg-black/10 relative before:absolute before:w-2.5 before:bg-black/25 before:left-0 before:inset-y-0;
+.sidebar-menu :is(a, button):not(.active):hover {
+	@apply bg-black/10 relative before:absolute before:w-2.5 before:bg-black/25 before:left-0 before:inset-y-0;
 }
 
-aside :is(a, button){
-  @apply block w-full text-center py-6 font-semibold;
+.active {
+	@apply bg-secondary text-primary relative before:absolute before:w-2.5 before:bg-accent before:left-0 before:inset-y-0;
 }
 
-#homepage input:not([type=checkbox]){
-  @apply bg-[#FAFAFA] border-[1px] border-black/25 focus-visible:outline-green-500/50 px-3 py-2 mt-2 w-full text-sm;
+aside :is(a, button) {
+	@apply block w-full text-center py-6 font-semibold;
 }
 
-#homepage input[type=file]{
-  @apply bg-transparent border-none p-0 mt-0 text-sm w-auto;
+#homepage input:not([type="checkbox"]) {
+	@apply bg-[#FAFAFA] border-[1px] border-black/25 focus-visible:outline-green-500/50 px-3 py-2 mt-2 w-full text-sm;
+}
+
+#homepage input[type="file"] {
+	@apply bg-transparent border-none p-0 mt-0 text-sm w-auto;
 }
 
 #homepage select {
-  @apply bg-[#FAFAFA] border-[1px] border-black/25 focus-visible:outline-green-500/50 px-3 py-2 mt-2 w-full text-sm h-[38px];
+	@apply bg-[#FAFAFA] border-[1px] border-black/25 focus-visible:outline-green-500/50 px-3 py-2 mt-2 w-full text-sm h-[38px];
 }
 
-#homepage label, p{
-  @apply font-medium text-sm
+#homepage label,
+p {
+	@apply font-medium text-sm;
 }
 
 #homepage .button {
-  @apply py-2 px-5 bg-secondary text-primary font-semibold rounded-md text-center text-sm border-[1px] border-black/25
+	@apply py-2 px-5 bg-secondary text-primary font-semibold rounded-md text-center text-sm border-[1px] border-black/25;
 }
 
 th {
