@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Layout } from '../components/layout';
 import { Card } from '../components';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db, storage } from '../firebase';
-import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import { ref } from 'firebase/storage';
 import { useUploadFile } from 'react-firebase-hooks/storage';
 import { uuidv4 } from '@firebase/util';
 
@@ -30,8 +29,8 @@ const filterImageName = imageName => {
 }
 
 const CreateData = () => {
-  const router = useRouter();
   const [uploadFile, uploading, snapshot, error] = useUploadFile();
+  const fileRef = useRef();
 
   // Each item
   const [item, setItem] = useState({
@@ -104,6 +103,7 @@ const CreateData = () => {
         contentType: data.image.type,
       }).then(() => {
         toast.success("Data berhasil ditambahkan");
+        fileRef.current.value = "";
         setData({
           nomorWO: "",
           nomorPolisi: "",
@@ -178,7 +178,7 @@ const CreateData = () => {
             </div>
             <div className="flex justify-start items-center gap-5 col-span-1 md:col-span-2 xl:col-span-3 mt-12">
               <button type="submit" className="button disabled:opacity-75" disabled={uploading}>Simpan</button>
-              <input type="file" name="image" accept="image/jpg, image/png, image/jpeg" onChange={imageHandler} className="text-black file:border-[1px] file:border-black/25 file:rounded-md file:px-5 file:py-2 file:bg-[#FAFAFA] file:text-black" />
+              <input type="file" ref={fileRef} name="image" accept="image/jpg, image/png, image/jpeg" onChange={imageHandler} className="text-black file:border-[1px] file:border-black/25 file:rounded-md file:px-5 file:py-2 file:bg-[#FAFAFA] file:text-black" />
             </div>
           </div>
         </form>

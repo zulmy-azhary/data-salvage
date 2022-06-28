@@ -1,6 +1,8 @@
 import { ImSpinner10 } from "react-icons/im";
+import { Pagination } from './'
 
 const Table = ({ data: { data, loading } }) => {
+  
   return (
     <>
       <h2 className="text-lg md:text-xl xl:text-2xl text-center font-bold">ITEM ASURANSI SALVAGE</h2>
@@ -43,7 +45,7 @@ const Table = ({ data: { data, loading } }) => {
                 ) : (
                   <tr>
                     <td align="center" colSpan="6">
-                      <div className="flex justify-center items-center gap-x-2">
+                      <div className="flex justify-center items-center gap-x-2 h-[420px]">
                         <ImSpinner10 className="animate-spin" />
                         <p className="animate-pulse">Memuat data...</p>
                       </div>
@@ -53,6 +55,7 @@ const Table = ({ data: { data, loading } }) => {
               </tbody>
           </table>
         </div>
+      <Pagination />
     </>
   );
 };
