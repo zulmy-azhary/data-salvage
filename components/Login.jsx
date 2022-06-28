@@ -70,9 +70,9 @@ const Login = () => {
             </div> */}
           </form>
           <div className="flex flex-row justify-center items-center">
-              <hr className="grow" />
-              <p className="text-center mx-6">OR</p>
-              <hr className="grow" />
+            <hr className="grow" />
+            <p className="text-center mx-6">OR</p>
+            <hr className="grow" />
           </div>
           <div className="mt-5 mb-9">
             <div className="flex justify-center items-center">

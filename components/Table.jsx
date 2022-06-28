@@ -1,15 +1,17 @@
+import { ImSpinner10 } from "react-icons/im";
+
 const Table = ({ data: { data, loading } }) => {
   return (
     <>
       <h2 className="text-lg md:text-xl xl:text-2xl text-center font-bold">ITEM ASURANSI SALVAGE</h2>
         <div className="w-full overflow-x-scroll md:overflow-auto pt-5">
-          <table className="table-auto w-full text-center">
+          <table className="table-auto w-full text-center border-separate">
             <thead className="bg-secondary text-primary">
               <tr>
                 <th>No.</th>
                 <th>No. WO</th>
-                <th>No. POL</th>
-                <th>SA</th>
+                <th>No. Polisi</th>
+                <th>Service Advisor</th>
                 <th>Asuransi</th>
                 <th>Vendor</th>
               </tr>
@@ -20,7 +22,7 @@ const Table = ({ data: { data, loading } }) => {
                     data.map((item, idx) => {
                       return (
                         <tr key={idx} className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                          <td>1</td>
+                          <td>{idx + 1}</td>
                           <td>{item.nomorWO}</td>
                           <td>{item.nomorPolisi}</td>
                           <td>{item.serviceAdvisor}</td>
@@ -30,10 +32,23 @@ const Table = ({ data: { data, loading } }) => {
                       )
                     })
                   ) : (
-                    <tr><td>Tidak ada data</td></tr>
+                    <tr>
+                      <td align="center" colSpan="6">
+                        <div className="flex justify-center items-center">
+                          <p>Tidak ada data</p>
+                          </div>
+                      </td>
+                    </tr>
                   )
                 ) : (
-                  <tr><td>Memuat...</td></tr>
+                  <tr>
+                    <td align="center" colSpan="6">
+                      <div className="flex justify-center items-center gap-x-2">
+                        <ImSpinner10 className="animate-spin" />
+                        <p className="animate-pulse">Memuat data...</p>
+                      </div>
+                    </td>
+                  </tr>
                 )}
               </tbody>
           </table>

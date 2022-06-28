@@ -3,9 +3,12 @@ import { Layout } from '../components/layout';
 import { Card } from '../components';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import { useUploadFile } from 'react-firebase-hooks/storage';
+import { uuidv4 } from '@firebase/util';
 
 // Service Advisor Options
 const serviceAdvisor = [
@@ -19,8 +22,16 @@ const serviceAdvisor = [
   "Syamsuryanan Amir"
 ];
 
+const filterImageName = imageName => {
+  const fullNameImage = imageName.split('.');
+  const extensions = fullNameImage[fullNameImage.length - 1];
+  
+  return `${uuidv4()}.${extensions}`;
+}
+
 const CreateData = () => {
   const router = useRouter();
+  const [uploadFile, uploading, snapshot, error] = useUploadFile();
 
   // Each item
   const [item, setItem] = useState({
@@ -35,7 +46,7 @@ const CreateData = () => {
     asuransi: "",
     vendor: "WIS",
     itemList: [],
-    image: ""
+    image: {}
   });
 
   const inputDataHandler = e => {
@@ -73,26 +84,36 @@ const CreateData = () => {
 
   const submitHandler = async e => {
     e.preventDefault();
+    const imageName = filterImageName(data.image.name);
+    const imageRef = ref(storage, `images/${imageName}`);
+    // const result = uploadFile(imageRef, data.image, {
+    //   contentType: data.image.type,
+    // });
+
     await addDoc(collection(db, 'data-salvage'), {
       nomorWO: data.nomorWO,
       nomorPolisi: data.nomorPolisi,
       serviceAdvisor: data.serviceAdvisor,
       asuransi: data.asuransi,
       vendor: data.vendor,
-      imageURL: data.image.name,
+      imageURL: imageName,
       itemList: data.itemList,
       createdAt: serverTimestamp()
     }).then(() => {
-      toast.success("Data berhasil ditambahkan!");
-      setData({
-        nomorWO: "",
-        nomorPolisi: "",
-        serviceAdvisor: "Ahmad Supardi",
-        asuransi: "",
-        vendor: "WIS",
-        itemList: [],
-        image: ""
-      })
+      uploadFile(imageRef, data.image, {
+        contentType: data.image.type,
+      }).then(() => {
+        toast.success("Data berhasil ditambahkan");
+        setData({
+          nomorWO: "",
+          nomorPolisi: "",
+          serviceAdvisor: "Ahmad Supardi",
+          asuransi: "",
+          vendor: "WIS",
+          itemList: [],
+          image: ""
+        })
+      });
     }).catch(err => {
       toast.error(err.message);
     })
@@ -156,7 +177,7 @@ const CreateData = () => {
               </div>
             </div>
             <div className="flex justify-start items-center gap-5 col-span-1 md:col-span-2 xl:col-span-3 mt-12">
-              <button type="submit" className="button">Simpan</button>
+              <button type="submit" className="button disabled:opacity-75" disabled={uploading}>Simpan</button>
               <input type="file" name="image" accept="image/jpg, image/png, image/jpeg" onChange={imageHandler} className="text-black file:border-[1px] file:border-black/25 file:rounded-md file:px-5 file:py-2 file:bg-[#FAFAFA] file:text-black" />
             </div>
           </div>
