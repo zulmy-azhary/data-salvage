@@ -4,13 +4,13 @@ import { Card, Table } from "../components";
 import { Layout } from "../components/layout";
 import { db } from "../firebase";
 
-const getVendor = (ref, vendor) => {
-	const getDataVendor = query(ref, where("vendor", "==", vendor));
-	const [dataVendor] = useCollectionData(getDataVendor);
-	return dataVendor;
-}
-
 const Dashboard = () => {
+	const getVendor = (ref, vendor) => {
+		const getDataVendor = query(ref, where("vendor", "==", vendor));
+		const [dataVendor] = useCollectionData(getDataVendor);
+		return dataVendor;
+	}
+	
 	const dataSalvageRef = collection(db, "data-salvage")
 	const getAllData = query(dataSalvageRef, orderBy("createdAt", "desc"));
 	const WIS = getVendor(dataSalvageRef, "WIS")
