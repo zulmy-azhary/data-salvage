@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import { ModalContext, DataContext } from "../context";
 import ReactToPrint from "react-to-print";
-import PrintDocument from "./PrintDocument";
+import { PrintDocument } from "./";
 
 const Modal = () => {
   const { modal, setModal } = useContext(ModalContext);

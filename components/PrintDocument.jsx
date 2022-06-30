@@ -86,4 +86,6 @@ const PrintDocument = forwardRef((_, ref) => {
 	);
 });
 
+PrintDocument.displayName = 'PrintDocument';
+
 export default PrintDocument;
