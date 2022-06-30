@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { ref } from 'firebase/storage';
 import { useUploadFile } from 'react-firebase-hooks/storage';
 import { uuidv4 } from '@firebase/util';
+import { ImSpinner9 } from 'react-icons/im';
 
 // Service Advisor Options
 const serviceAdvisor = [
@@ -85,9 +86,6 @@ const CreateData = () => {
     e.preventDefault();
     const imageName = filterImageName(data.image.name);
     const imageRef = ref(storage, `images/${imageName}`);
-    // const result = uploadFile(imageRef, data.image, {
-    //   contentType: data.image.type,
-    // });
 
     await addDoc(collection(db, 'data-salvage'), {
       nomorWO: data.nomorWO,
@@ -177,7 +175,7 @@ const CreateData = () => {
               </div>
             </div>
             <div className="flex justify-start items-center gap-5 col-span-1 md:col-span-2 xl:col-span-3 mt-12">
-              <button type="submit" className="button disabled:opacity-75" disabled={uploading}>Simpan</button>
+              <button type="submit" className="button disabled:opacity-75 flex justify-center items-center gap-2" disabled={uploading}>{uploading ? (<><ImSpinner9 className="animate-spin" />Proses...</>) : "Simpan"}</button>
               <input type="file" ref={fileRef} name="image" accept="image/jpg, image/png, image/jpeg" onChange={imageHandler} className="text-black file:border-[1px] file:border-black/25 file:rounded-md file:px-5 file:py-2 file:bg-[#FAFAFA] file:text-black" />
             </div>
           </div>

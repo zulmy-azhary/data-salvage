@@ -1,8 +1,37 @@
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import { CgChevronDoubleLeftO, CgChevronDoubleRightO } from "react-icons/cg";
 import { ImSpinner10 } from "react-icons/im";
-import { Pagination } from './'
+import ReactPaginate from "react-paginate";
+import { DataContext, ModalContext } from "../context";
+import { Modal } from "./";
 
-const Table = ({ data: { data, loading } }) => {
-  
+const Table = ({ itemsPerPage }) => {
+  const router = useRouter();
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const [currentItems, setCurrentItems] = useState([]);
+  const { setModal } = useContext(ModalContext);
+  const { data, loading, setDetails } = useContext(DataContext);
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    if (!loading) {
+      setPageCount(Math.ceil(data.length / itemsPerPage));
+      setCurrentItems(data.slice(itemOffset, endOffset));
+    }
+  }, [data, itemOffset, itemsPerPage]);
+
+  const handlePageClick = e => {
+    const newOffset = e.selected * itemsPerPage % data.length;
+    setItemOffset(newOffset);
+  }
+
+  const actionHandler = (itemFetch, e) => {
+    setDetails(itemFetch);
+    setModal(true);
+  }
+
   return (
     <>
       <h2 className="text-lg md:text-xl xl:text-2xl text-center font-bold">ITEM ASURANSI SALVAGE</h2>
@@ -15,21 +44,21 @@ const Table = ({ data: { data, loading } }) => {
                 <th>No. Polisi</th>
                 <th>Service Advisor</th>
                 <th>Asuransi</th>
-                <th>Vendor</th>
+                {router.pathname === "/" ? <th>Vendor</th> : <th>Action</th>}
               </tr>
             </thead>
               <tbody>
                 {!loading ? (
-                  data.length > 0 ? (
-                    data.map((item, idx) => {
+                  currentItems.length > 0 ? (
+                    currentItems.map((item, idx) => {
                       return (
                         <tr key={idx} className="odd:bg-transparent even:bg-black/5 hover:bg-black/10">
-                          <td>{idx + 1}</td>
+                          <td>{itemOffset + (idx + 1)}</td>
                           <td>{item.nomorWO}</td>
                           <td>{item.nomorPolisi}</td>
                           <td>{item.serviceAdvisor}</td>
                           <td>{item.asuransi}</td>
-                          <td>{item.vendor}</td>
+                          {router.pathname === "/" ? <td>{item.vendor}</td> : <td><button onClick={actionHandler.bind(this, item)} className="text-sky-600 hover:text-sky-800 font-semibold">Detail</button></td>}
                         </tr>
                       )
                     })
@@ -55,7 +84,24 @@ const Table = ({ data: { data, loading } }) => {
               </tbody>
           </table>
         </div>
-      <Pagination />
+      {/* <Pagination /> */}
+      <ReactPaginate
+        nextLabel={<CgChevronDoubleRightO />}
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        pageCount={pageCount}
+        previousLabel={<CgChevronDoubleLeftO />}
+        previousLinkClassName="text-3xl"
+        nextLinkClassName="text-3xl"
+        breakLabel="..."
+        containerClassName="mt-5 flex justify-center items-center gap-x-7 text-secondary"
+        activeClassName="text-secondary text-2xl"
+        disabledClassName="text-secondary/50"
+        breakLinkClassName="text-secondary/50"
+        renderOnZeroPageCount={null}
+      />
+      {router.pathname === "/data-salvage" && <Modal />}
     </>
   );
 };

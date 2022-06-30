@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Loading } from "../components";
 import Login from "../components/Login";
-import { ToggleProvider } from "../context/ToggleContext";
+import { ToggleProvider, DataProvider, ModalProvider } from "../context";
 import { auth } from "../firebase";
 import "../styles/globals.css";
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -33,16 +33,20 @@ function MyApp({ Component, pageProps }) {
 
 	return (
 		<ToggleProvider>
-			<Component {...pageProps} />
-      <ToastContainer
-        position="top-right"
-        closeOnClick
-        autoClose={3000}
-        pauseOnFocusLoss={false}
-        pauseOnHover={false}
-        limit={2}
-        draggable
-      />
+			<ModalProvider>
+				<DataProvider>
+					<Component {...pageProps} />
+					<ToastContainer
+						position="top-right"
+						closeOnClick
+						autoClose={3000}
+						pauseOnFocusLoss={false}
+						pauseOnHover={false}
+						limit={2}
+						draggable
+						/>
+				</DataProvider>
+			</ModalProvider>
 		</ToggleProvider>
 	);
 }
