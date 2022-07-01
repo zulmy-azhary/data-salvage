@@ -17,6 +17,7 @@ a {
 
 * {
 	box-sizing: border-box;
+	@apply transition-all;
 }
 
 .content__header {
@@ -83,21 +84,29 @@ p {
 	@apply py-2 px-5 bg-secondary text-primary font-semibold rounded-md text-center text-sm border-[1px] border-black/25;
 }
 
-#modalBody::-webkit-scrollbar {
+*::-webkit-scrollbar {
 	width: 14px;
+	height: 14px;
 }
 
-#modalBody::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
 	@apply bg-secondary/50 hover:bg-secondary border-4 border-solid border-transparent rounded-xl;
 	background-clip: padding-box;
 }
 
-th {
-	@apply px-6 py-3 text-sm xl:text-base;
+:is(#table, #tableModal) th {
+	@apply px-6 py-3;
 }
 
-td {
-	@apply py-[10px] text-sm xl:text-base;
+:is(#table, #tableModal) td {
+	@apply py-[10px];
+}
+
+#printDocument th {
+	@apply px-4 py-2 text-sm font-medium;
+}
+#printDocument td {
+	@apply px-4 py-1 text-sm;
 }
 
 @media screen {

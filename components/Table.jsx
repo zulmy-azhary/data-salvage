@@ -36,7 +36,7 @@ const Table = ({ itemsPerPage }) => {
     <>
       <h2 className="text-lg md:text-xl xl:text-2xl text-center font-bold">ITEM ASURANSI SALVAGE</h2>
         <div className="w-full overflow-x-scroll md:overflow-auto pt-5">
-          <table className="table-auto w-full text-center border-separate">
+          <table id="table" className="table-auto w-full text-center border-separate">
             <thead className="bg-secondary text-primary">
               <tr>
                 <th>No.</th>
@@ -98,6 +98,7 @@ const Table = ({ itemsPerPage }) => {
         containerClassName="mt-5 flex justify-center items-center gap-x-7 text-secondary"
         activeClassName="text-secondary text-2xl"
         disabledClassName="text-secondary/50"
+        disabledLinkClassName="cursor-not-allowed"
         breakLinkClassName="text-secondary/50"
         renderOnZeroPageCount={null}
       />

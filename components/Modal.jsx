@@ -14,25 +14,24 @@ const Modal = () => {
   const statusHandler = e => {
     setStatus({ ...status, [e.target.name]: e.target.value })
   }
-  // console.log(Object.keys(status).find(s => s === "itemStatus-2"));
+  // console.log(Object.values(status));
   
   const modalHandler = () => {
     setModal(false)
     setStatus({})
   }
-  
 
 	return (
-		<div tabIndex="-1" className="overflow-hidden backdrop-blur-sm bg-black/25 fixed top-0 inset-x-0 z-50 w-full md:inset-0 h-screen md:h-full flex justify-center items-center">
+		<div tabIndex="-1" className="ease-out overflow-hidden backdrop-blur-sm bg-black/25 fixed top-0 inset-x-0 z-50 w-full md:inset-0 h-screen md:h-full flex justify-center items-center">
 			<div className="absolute md:static top-0 p-4 w-full max-w-4xl min-h-max">
 				<div className="relative bg-white rounded-lg">
 					<div className="flex justify-between items-center p-5 border-b border-gray-300">
-						<h3 className="text-3xl font-medium text-gray-900">Item Asuransi Salvage</h3>
+						<h3 className="text-lg md:text-3xl font-medium text-gray-900">Item Asuransi Salvage</h3>
             <MdClose onClick={modalHandler} className="cursor-pointer text-black text-xl" />
 					</div>
           <div id="modalBody" className="overflow-y-auto scrollbar-auto">
-            <div className="w-full h-[600px]">
-              <div className="md:px-14 py-16 ">
+            <div className="w-full h-[600px] px-3 md:px-0">
+              <div className="md:px-14 py-6 md:py-16 ">
                 <div className="flex flex-col md:flex-row justify-between gap-y-1 md:gap-x-5">
                   <p className="basis-1/3 text-center md:text-start">Nomor Polisi</p>
                   <div className="basis-2/3 text-gray-500 text-center md:text-start bg-transparent border-0 md:border-b-[1px] border-gray-300">
@@ -63,13 +62,17 @@ const Modal = () => {
                     <p className="text-lg md:text-sm">{details.asuransi}</p>
                   </div>
                 </div>
-                <div className="mt-8">
-                  <table className="table-auto w-full text-center">
-                    <thead className="text-center">
+                <div className="mt-10 flex flex-col justify-between gap-y-2">
+                  <p className="text-center">Item Salvage</p>
+                  <table id="tableModal" className="table-auto w-full text-center border-separate">
+                    <thead className="text-center bg-black/10">
+                      <tr>
+                        <th colSpan={2} className="text-sm font-medium w-4">Status</th>
+                        <th rowSpan={2} className="text-sm font-medium">Nama Item</th>
+                      </tr>
                       <tr>
                         <th className="text-sm font-medium w-4">Ada</th>
                         <th className="text-sm font-medium w-4">Hilang</th>
-                        <th className="text-sm font-medium">Nama Item</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -77,16 +80,16 @@ const Modal = () => {
                         <tr key={idx} className="odd:bg-transparent even:bg-black/5">
                           <td className="text-center"><input type="radio" value="Ada" onChange={statusHandler} name={`itemStatus-${idx}`} className="basis-1/2 text-blue-600 bg-gray-100 border-gray-300 rounded" /></td>
                           <td className="text-center"><input type="radio" value="Hilang" onChange={statusHandler} name={`itemStatus-${idx}`} className="basis-1/2 text-blue-600 bg-gray-100 border-gray-300 rounded" /></td>
-                          <td className="text-start pl-5 text-sm text-black disabled:text-gray-500" disabled={true}>{item}</td>
+                          <td className="text-center md:text-start md:pl-5 text-sm" disabled={true}>{item}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-                <div className="flex flex-col justify-between gap-y-3 mt-6">
-                  <p className="basis-1/3">Foto</p>
+                <div className="flex flex-col justify-between gap-y-2 mt-10">
+                  <p className="basis-1/3 text-center">Foto Lampiran</p>
                   <div className={`basis-2/3 text-gray-900 bg-transparent border-[1px] border-gray-300 ${imageValue ? "mx-auto" : "px-5 md:px-10 py-32"}`}>
-                    {imageValue && <img className="object-cover h-60 w-96" src={imageValue} alt="Foto Item" />}
+                    {imageValue && <img className="object-cover w-96" src={imageValue} alt="Foto Item" />}
                   </div>
                 </div>
               </div>

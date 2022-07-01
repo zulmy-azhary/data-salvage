@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { Card } from './';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { FcGoogle } from 'react-icons/fc';
 
 const Login = () => {
   const router = useRouter();
@@ -76,7 +77,10 @@ const Login = () => {
           </div>
           <div className="mt-5 mb-9">
             <div className="flex justify-center items-center">
-              <button onClick={signInHandler}>Sign In With Google</button>
+              <button onClick={signInHandler} className="flex justify-between items-center gap-x-2 group">
+                <FcGoogle className="text-2xl grayscale group-hover:grayscale-0" />
+                <p className="group-hover:text-sky-500">Sign In With Google</p>
+                </button>
             </div>
           </div>
         </div>
